@@ -20,6 +20,8 @@ dependencies:
   firebase_core: any
   firebase_database: any
   get_storage: any
+  firebase_auth: any
+  flutter_spinkit: any
 
 
 dev_dependencies:

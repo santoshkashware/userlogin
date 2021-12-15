@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_app/routes/app_pages.dart';
 import 'package:login_app/utils/them_data.dart';
 import 'package:login_app/view%20models/login_view_model.dart';
+import 'package:login_app/view%20models/register_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'view models/splash_view_model.dart';
@@ -25,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => LoginViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RegisterViewModel(),
         ),
       ],
       child: GetMaterialApp(

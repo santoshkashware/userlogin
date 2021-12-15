@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:login_app/pages/home_page.dart';
 import 'package:login_app/pages/login_page.dart';
+import 'package:login_app/pages/register_page.dart';
 import 'package:login_app/pages/splash_page.dart';
 
 part 'app_routes.dart';
@@ -17,6 +19,14 @@ class AppPages {
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginPage(),
+    ),
+    GetPage(
+      name: _Paths.REGISTER,
+      page: () => RegisterPage(),
+    ),
+    GetPage(
+      name: _Paths.HOME,
+      page: () => HomePage(),
     ),
   ];
 }

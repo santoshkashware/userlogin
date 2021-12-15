@@ -4,9 +4,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:login_app/routes/app_pages.dart';
 import 'package:login_app/services/auth.dart';
 import 'package:login_app/utils/validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginViewModel extends ChangeNotifier with ValidationMixin {
+class RegisterViewModel extends ChangeNotifier with ValidationMixin {
   late TextEditingController emailController, passwordController;
   final box = GetStorage();
   bool loadingView = false;
@@ -31,9 +30,8 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin {
       } else {
         notifyLoader(true);
         await Auth()
-            .handleSignInEmail(emailController.text, passwordController.text);
+            .handleSignUp(emailController.text, passwordController.text);
         notifyLoader(false);
-
         navigateToHomeView();
       }
     }
@@ -45,7 +43,7 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin {
     notifyListeners();
   }
 
-  navigateToRegisterView() {
+  navigateToLogin() {
     Get.toNamed(Routes.REGISTER);
   }
 

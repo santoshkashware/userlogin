@@ -7,7 +7,11 @@ class InputFieldArea extends StatelessWidget {
   final IconData iconData;
 
   const InputFieldArea(
-      {Key? key, required this.controller, required this.obscureText,required this.labelText, required this.iconData})
+      {Key? key,
+      required this.controller,
+      required this.obscureText,
+      required this.labelText,
+      required this.iconData})
       : super(key: key);
 
   @override

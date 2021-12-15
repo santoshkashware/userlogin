@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
-import 'package:login_app/view%20models/login_view_model.dart';
+import 'package:login_app/view%20models/register_view_model.dart';
 import 'package:login_app/widgets/textform.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final loginViewModel = Provider.of<LoginViewModel>(context);
-    loginViewModel.initializeObject();
+    final registerViewModel = Provider.of<RegisterViewModel>(context);
+    registerViewModel.initializeObject();
     return Scaffold(
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.only(top: 60, left: 16, right: 16),
           child: SingleChildScrollView(
             child: Form(
-              key: loginViewModel.loginFormKey,
+              key: registerViewModel.loginFormKey,
               child: Column(
                 children: [
                   Text(
-                    "User Login ",
+                    "User Register ",
                     style: TextStyle(
                       fontSize: 20,
                     ),
@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
                     height: 20,
                   ),
                   InputFieldArea(
-                    controller: loginViewModel.emailController,
+                    controller: registerViewModel.emailController,
                     obscureText: false,
                     labelText: "Email",
                     iconData: Icons.email,
@@ -39,7 +39,7 @@ class LoginPage extends StatelessWidget {
                     height: 16,
                   ),
                   InputFieldArea(
-                    controller: loginViewModel.passwordController,
+                    controller: registerViewModel.passwordController,
                     obscureText: true,
                     labelText: "Password",
                     iconData: Icons.lock,
@@ -61,18 +61,18 @@ class LoginPage extends StatelessWidget {
                         padding: MaterialStateProperty.all(EdgeInsets.all(14)),
                       ),
                       child: Text(
-                        "Login",
+                        "Register",
                         style: TextStyle(fontSize: 14, color: Colors.white),
                       ),
                       onPressed: () {
-                        loginViewModel.checkLogin();
+                        registerViewModel.checkLogin();
                       },
                     ),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  Text('You do not have account?',
+                  Text('You have account?',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
@@ -82,9 +82,9 @@ class LoginPage extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      loginViewModel.navigateToRegisterView();
+                      registerViewModel.navigateToLogin();
                     },
-                    child: Text('Register',
+                    child: Text('Login',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 18,
