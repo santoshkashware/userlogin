@@ -7,32 +7,34 @@ import 'package:login_app/utils/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginViewModel extends ChangeNotifier with ValidationMixin {
-   TextEditingController? emailController, passwordController;
+  TextEditingController? emailController, passwordController;
   final box = GetStorage();
   bool loadingView = false;
 
   void initializeObject() {
-    if(emailController==null)
-    emailController = new TextEditingController();
-    if(passwordController==null)
-    passwordController = new TextEditingController();
+    if (emailController == null) emailController = new TextEditingController();
+    if (passwordController == null)
+      passwordController = new TextEditingController();
   }
 
   checkLogin() async {
-      if (validateEmail(emailController!.text) != null) {
-        Get.snackbar("Error", "${validateEmail(emailController!.text)}");
-        return;
-      } else if (validatePassword(passwordController!.text) != null) {
-        Get.snackbar("Error", "${validatePassword(passwordController!.text)}");
-        return;
-      } else {
-        notifyLoader(true);
-        await Auth()
-            .handleSignInEmail(emailController!.text, passwordController!.text);
-        notifyLoader(false);
-
+    if (validateEmail(emailController!.text) != null) {
+      Get.snackbar("Error", "${validateEmail(emailController!.text)}");
+      return;
+    } else if (validatePassword(passwordController!.text) != null) {
+      Get.snackbar("Error", "${validatePassword(passwordController!.text)}");
+      return;
+    } else {
+      notifyLoader(true);
+      await Auth()
+          .handleSignInEmail(emailController!.text, passwordController!.text)
+          .then((user) {
         navigateToHomeView();
-      }
+      }).catchError((e) {
+        Get.snackbar("Error", "${e}");
+      });
+      notifyLoader(false);
+    }
   }
 
   notifyLoader(bool state) {
@@ -47,5 +49,8 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin {
   navigateToHomeView() {
     box.write('home', true);
     Get.offAllNamed(Routes.HOME);
+  }
+  hideKeyBoard(BuildContext context){
+    FocusScope.of(context).unfocus();
   }
 }

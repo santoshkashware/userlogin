@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:login_app/view%20models/login_view_model.dart';
 import 'package:login_app/widgets/textform.dart';
@@ -65,10 +66,22 @@ class LoginPage extends StatelessWidget {
                         style: TextStyle(fontSize: 14, color: Colors.white),
                       ),
                       onPressed: () {
+                        loginViewModel.hideKeyBoard(context);
                         loginViewModel.checkLogin();
                       },
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  loginViewModel.loadingView
+                      ? SpinKitThreeBounce(
+                          color: Colors.white,
+                          size: 20,
+                        )
+                      : SizedBox(
+                          height: 0,
+                        ),
                   SizedBox(
                     height: 20,
                   ),

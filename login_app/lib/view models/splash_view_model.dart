@@ -8,11 +8,11 @@ class SplashViewModel extends ChangeNotifier {
   final box = GetStorage();
 
   checkUser(BuildContext context) {
-
     Future.delayed(const Duration(seconds: 2), () {
-      bool userExist = box.read('userExist') ?? false;
+      bool userExist = box.read('home') ?? false;
       if (userExist) {
         //TODO Show User dashboard
+        navigateTo(Routes.HOME);
       } else {
         // TODO Show Login
         navigateTo(Routes.LOGIN);
@@ -24,9 +24,4 @@ class SplashViewModel extends ChangeNotifier {
     Get.offAllNamed(routesName);
   }
 
-  sendToScreen(BuildContext context, String navigationName) {
-    Navigator.of(context).pushNamedAndRemoveUntil(
-        navigationName, (Route<dynamic> route) => false);
-    notifyListeners();
-  }
 }

@@ -6,15 +6,14 @@ import 'package:login_app/services/auth.dart';
 import 'package:login_app/utils/validator.dart';
 
 class RegisterViewModel extends ChangeNotifier with ValidationMixin {
-    TextEditingController? emailController, passwordController;
+  TextEditingController? emailController, passwordController;
   final box = GetStorage();
   bool loadingView = false;
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   void initializeObject() {
-    if(emailController==null)
-      emailController = new TextEditingController();
-    if(passwordController==null)
+    if (emailController == null) emailController = new TextEditingController();
+    if (passwordController == null)
       passwordController = new TextEditingController();
   }
 
@@ -32,9 +31,13 @@ class RegisterViewModel extends ChangeNotifier with ValidationMixin {
       } else {
         notifyLoader(true);
         await Auth()
-            .handleSignUp(emailController!.text, passwordController!.text);
+            .handleSignUp(emailController!.text, passwordController!.text)
+            .then((user) {
+          navigateToHomeView();
+        }).catchError((e) {
+          Get.snackbar("Error", "${e}");
+        });
         notifyLoader(false);
-        navigateToHomeView();
       }
     }
     loginFormKey.currentState!.save();
@@ -46,11 +49,14 @@ class RegisterViewModel extends ChangeNotifier with ValidationMixin {
   }
 
   navigateToLogin() {
-    Get.toNamed(Routes.REGISTER);
+    Get.toNamed(Routes.LOGIN);
   }
 
   navigateToHomeView() {
     box.write('home', true);
     Get.offAllNamed(Routes.HOME);
+  }
+  hideKeyBoard(BuildContext context){
+    FocusScope.of(context).unfocus();
   }
 }

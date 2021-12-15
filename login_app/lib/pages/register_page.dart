@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:login_app/view%20models/register_view_model.dart';
 import 'package:login_app/widgets/textform.dart';
@@ -72,6 +73,17 @@ class RegisterPage extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
+                  registerViewModel.loadingView
+                      ? SpinKitThreeBounce(
+                    color: Colors.white,
+                    size: 20,
+                  )
+                      : SizedBox(
+                    height: 0,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Text('You have account?',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -82,6 +94,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
+                      registerViewModel.hideKeyBoard(context);
                       registerViewModel.navigateToLogin();
                     },
                     child: Text('Login',
