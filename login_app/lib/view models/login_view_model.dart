@@ -4,38 +4,25 @@ import 'package:get_storage/get_storage.dart';
 import 'package:login_app/routes/app_pages.dart';
 import 'package:login_app/utils/validator.dart';
 
-class LoginViewModel extends ChangeNotifier with ValidationMixin{
-  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+class LoginViewModel extends ChangeNotifier with ValidationMixin {
   late TextEditingController emailController, passwordController;
-  bool hidePassword = true;
   final box = GetStorage();
-
-
 
   void initializeObject() {
     emailController = new TextEditingController();
     passwordController = new TextEditingController();
   }
-  updatePasswordView() {
-    hidePassword = !hidePassword;
-  }
-
-  String? validateEMailView(String value) {
-    return value.length <= 0 ? '' : validateEmail(value);
-  }
-
-  String? validatePasswordView(String value) {
-    return value.length <= 0 ? '' : validatePassword(value);
-  }
 
   checkLogin() {
-    final isValid = loginFormKey.currentState!.validate();
-    if (!isValid) {
+    if (validateEmail(emailController.text) != null) {
+      Get.snackbar("Error", "${validateEmail(emailController.text)}");
+      return;
+    } else if (validatePassword(passwordController.text) != null) {
+      Get.snackbar("Error", "${validatePassword(passwordController.text)}");
       return;
     } else {
       String? emailValue = box.read('email');
       String? passwordValue = box.read('password');
-
       if (emailValue == emailController.text &&
           passwordValue == passwordController.text) {
         box.write('home', true);
@@ -44,7 +31,6 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin{
         Get.snackbar("Error", "Please check email or password");
       }
     }
-    loginFormKey.currentState!.save();
   }
 
   navigateToRegisterView() {
@@ -54,5 +40,4 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin{
   navigateToHomeView() {
     Get.offAllNamed(Routes.HOME);
   }
-
 }

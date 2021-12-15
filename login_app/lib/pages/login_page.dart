@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
 import 'package:login_app/view%20models/login_view_model.dart';
+import 'package:login_app/widgets/textform.dart';
 import 'package:provider/provider.dart';
+
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -14,62 +15,33 @@ class LoginPage extends StatelessWidget {
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.only(top: 60, left: 16, right: 16),
-
           child: SingleChildScrollView(
             child: Form(
-              key: loginViewModel.loginFormKey,
               child: Column(
                 children: [
                   Text(
                     "User Login ",
-                    style: TextStyle(fontSize: 20,),
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      labelText: "Email",
-                      prefixIcon: Icon(Icons.email),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
+                  InputFieldArea(
                     controller: loginViewModel.emailController,
-
-                    validator: (value) {
-                      return loginViewModel.validateEMailView(value!);
-                    },
+                    obscureText: false,
+                    labelText: "Email",
+                    iconData: Icons.email,
                   ),
                   SizedBox(
                     height: 16,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        labelText: "Password",
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            loginViewModel.hidePassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-
-                          ),
-                          onPressed: () {
-                            loginViewModel.updatePasswordView();
-                          },
-                        )),
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: loginViewModel.hidePassword,
+                  InputFieldArea(
                     controller: loginViewModel.passwordController,
-
-                    validator: (value) {
-                      return loginViewModel.validatePasswordView(value!);
-                    },
+                    obscureText: true,
+                    labelText: "Password",
+                    iconData: Icons.lock,
                   ),
                   SizedBox(
                     height: 16,
@@ -84,7 +56,7 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         backgroundColor:
-                        MaterialStateProperty.all(Colors.deepPurpleAccent),
+                            MaterialStateProperty.all(Colors.deepPurpleAccent),
                         padding: MaterialStateProperty.all(EdgeInsets.all(14)),
                       ),
                       child: Text(
@@ -102,20 +74,20 @@ class LoginPage extends StatelessWidget {
                   Text('You do not have account?',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 14, )),
+                        fontSize: 14,
+                      )),
                   SizedBox(
                     height: 15,
                   ),
                   InkWell(
-                    onTap: () {
-
-                    },
+                    onTap: () {},
                     child: Text('Register',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 18,
                           decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.bold,)),
+                          fontWeight: FontWeight.bold,
+                        )),
                   )
                 ],
               ),
