@@ -18,6 +18,7 @@ dependencies:
   get: any
   provider: any
   firebase_core: any
+  firebase_database: any
   get_storage: any
 
 
