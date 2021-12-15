@@ -7,7 +7,7 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<SplashViewModel>(context).checkUser(context);
+    Provider.of<SplashViewModel>(context,listen: false).checkUser(context);
     return Scaffold(
       body: Container(
         color: Colors.cyan,

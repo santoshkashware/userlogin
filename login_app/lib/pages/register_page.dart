@@ -30,7 +30,7 @@ class RegisterPage extends StatelessWidget {
                     height: 20,
                   ),
                   InputFieldArea(
-                    controller: registerViewModel.emailController,
+                    controller: registerViewModel.emailController!,
                     obscureText: false,
                     labelText: "Email",
                     iconData: Icons.email,
@@ -39,7 +39,7 @@ class RegisterPage extends StatelessWidget {
                     height: 16,
                   ),
                   InputFieldArea(
-                    controller: registerViewModel.passwordController,
+                    controller: registerViewModel.passwordController!,
                     obscureText: true,
                     labelText: "Password",
                     iconData: Icons.lock,

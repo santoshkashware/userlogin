@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -8,20 +6,20 @@ import 'package:login_app/routes/app_pages.dart';
 
 class SplashViewModel extends ChangeNotifier {
   final box = GetStorage();
+
   checkUser(BuildContext context) {
 
-    const threeMillis = Duration(seconds: 3);
-    Timer(threeMillis, () {
-      bool userExist = box.read('userExist')?? false;
-       if(userExist){
-         //TODO Show User dashboard
-       }else{
-         // TODO Show Login
-         navigateTo(Routes.LOGIN);
-
-       }
+    Future.delayed(const Duration(seconds: 2), () {
+      bool userExist = box.read('userExist') ?? false;
+      if (userExist) {
+        //TODO Show User dashboard
+      } else {
+        // TODO Show Login
+        navigateTo(Routes.LOGIN);
+      }
     });
   }
+
   navigateTo(String routesName) {
     Get.offAllNamed(routesName);
   }
@@ -31,5 +29,4 @@ class SplashViewModel extends ChangeNotifier {
         navigationName, (Route<dynamic> route) => false);
     notifyListeners();
   }
-
 }

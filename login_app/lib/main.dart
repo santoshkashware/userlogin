@@ -10,36 +10,28 @@ import 'package:provider/provider.dart';
 
 import 'view models/splash_view_model.dart';
 
-void main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => SplashViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => LoginViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => RegisterViewModel(),
-        ),
-      ],
-      child: GetMaterialApp(
-        title: "Login Demo",
-        debugShowCheckedModeBanner: false,
-        initialRoute: AppPages.INITIAL,
-        getPages: AppPages.routes,
-        theme: Themes.light,
-        darkTheme: Themes.dark,
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (_) => SplashViewModel(),
       ),
-    );
-  }
+      ChangeNotifierProvider(
+        create: (_) => LoginViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => RegisterViewModel(),
+      ),
+    ],
+    child: GetMaterialApp(
+      title: "Login Demo",
+      debugShowCheckedModeBanner: false,
+      initialRoute: AppPages.INITIAL,
+      getPages: AppPages.routes,
+      theme: Themes.light,
+      darkTheme: Themes.dark,
+    ),
+  ));
 }

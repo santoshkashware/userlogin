@@ -17,7 +17,7 @@ class LoginPage extends StatelessWidget {
           margin: EdgeInsets.only(top: 60, left: 16, right: 16),
           child: SingleChildScrollView(
             child: Form(
-              key: loginViewModel.loginFormKey,
+              // key: loginViewModel.loginFormKey,
               child: Column(
                 children: [
                   Text(
@@ -30,7 +30,7 @@ class LoginPage extends StatelessWidget {
                     height: 20,
                   ),
                   InputFieldArea(
-                    controller: loginViewModel.emailController,
+                    controller: loginViewModel.emailController!,
                     obscureText: false,
                     labelText: "Email",
                     iconData: Icons.email,
@@ -39,7 +39,7 @@ class LoginPage extends StatelessWidget {
                     height: 16,
                   ),
                   InputFieldArea(
-                    controller: loginViewModel.passwordController,
+                    controller: loginViewModel.passwordController!,
                     obscureText: true,
                     labelText: "Password",
                     iconData: Icons.lock,

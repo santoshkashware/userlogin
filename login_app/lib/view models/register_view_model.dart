@@ -6,14 +6,16 @@ import 'package:login_app/services/auth.dart';
 import 'package:login_app/utils/validator.dart';
 
 class RegisterViewModel extends ChangeNotifier with ValidationMixin {
-  late TextEditingController emailController, passwordController;
+    TextEditingController? emailController, passwordController;
   final box = GetStorage();
   bool loadingView = false;
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   void initializeObject() {
-    emailController = new TextEditingController();
-    passwordController = new TextEditingController();
+    if(emailController==null)
+      emailController = new TextEditingController();
+    if(passwordController==null)
+      passwordController = new TextEditingController();
   }
 
   checkLogin() async {
@@ -21,16 +23,16 @@ class RegisterViewModel extends ChangeNotifier with ValidationMixin {
     if (!isValid) {
       return;
     } else {
-      if (validateEmail(emailController.text) != null) {
-        Get.snackbar("Error", "${validateEmail(emailController.text)}");
+      if (validateEmail(emailController!.text) != null) {
+        Get.snackbar("Error", "${validateEmail(emailController!.text)}");
         return;
-      } else if (validatePassword(passwordController.text) != null) {
-        Get.snackbar("Error", "${validatePassword(passwordController.text)}");
+      } else if (validatePassword(passwordController!.text) != null) {
+        Get.snackbar("Error", "${validatePassword(passwordController!.text)}");
         return;
       } else {
         notifyLoader(true);
         await Auth()
-            .handleSignUp(emailController.text, passwordController.text);
+            .handleSignUp(emailController!.text, passwordController!.text);
         notifyLoader(false);
         navigateToHomeView();
       }
