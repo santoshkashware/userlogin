@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:login_app/routes/app_pages.dart';
 import 'package:login_app/services/auth.dart';
+import 'package:login_app/services/firebaseauth.dart';
 import 'package:login_app/utils/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -19,19 +20,24 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin {
 
   checkLogin() async {
     if (validateEmail(emailController!.text) != null) {
-      Get.snackbar("Error", "${validateEmail(emailController!.text)}");
+      showErrorView(message: "${validateEmail(emailController!.text)}");
       return;
     } else if (validatePassword(passwordController!.text) != null) {
-      Get.snackbar("Error", "${validatePassword(passwordController!.text)}");
+      showErrorView(message: "${validatePassword(passwordController!.text)}");
       return;
     } else {
       notifyLoader(true);
-      await Auth()
-          .handleSignInEmail(emailController!.text, passwordController!.text)
-          .then((user) {
-        navigateToHomeView();
+      await FirebaseData().handleUserData(emailController!.text).then((user) {
+        if (user.email != null) {
+          if (emailController!.text == user.email &&
+              passwordController!.text == user.password) {
+            navigateToHomeView();
+          } else {}
+        } else {
+          print('data is null');
+        }
       }).catchError((e) {
-        Get.snackbar("Error", "${e}");
+        showErrorView(message: e);
       });
       notifyLoader(false);
     }
@@ -42,7 +48,7 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin {
     notifyListeners();
   }
 
-  navigateToRegisterView() {
+  navigateToRegisterView() async {
     Get.toNamed(Routes.REGISTER);
   }
 
@@ -50,7 +56,8 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin {
     box.write('home', true);
     Get.offAllNamed(Routes.HOME);
   }
-  hideKeyBoard(BuildContext context){
+
+  hideKeyBoard(BuildContext context) {
     FocusScope.of(context).unfocus();
   }
 }

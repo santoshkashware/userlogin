@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:login_app/utils/masked_text_controller.dart';
 import 'package:login_app/view%20models/login_view_model.dart';
+import 'package:login_app/widgets/clickable_text.dart';
+import 'package:login_app/widgets/cutom_buttom.dart';
+import 'package:login_app/widgets/spacer_view.dart';
 import 'package:login_app/widgets/textform.dart';
 import 'package:provider/provider.dart';
 
@@ -27,84 +31,64 @@ class LoginPage extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
+                  SpacerView(
+                    spaceSize: 20,
                   ),
                   InputFieldArea(
                     controller: loginViewModel.emailController!,
                     obscureText: false,
                     labelText: "Email",
                     iconData: Icons.email,
+                    inputFormatter: MaskTextInputFormatter(),
                   ),
-                  SizedBox(
-                    height: 16,
+                  SpacerView(
+                    spaceSize: 16,
                   ),
                   InputFieldArea(
                     controller: loginViewModel.passwordController!,
                     obscureText: true,
                     labelText: "Password",
+                    inputFormatter: MaskTextInputFormatter(),
                     iconData: Icons.lock,
                   ),
-                  SizedBox(
-                    height: 16,
+                  SpacerView(
+                    spaceSize: 16,
                   ),
-                  ConstrainedBox(
-                    constraints: BoxConstraints.tightFor(width: context.width),
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.deepPurpleAccent),
-                        padding: MaterialStateProperty.all(EdgeInsets.all(14)),
-                      ),
-                      child: Text(
-                        "Login",
-                        style: TextStyle(fontSize: 14, color: Colors.white),
-                      ),
+                  CustomButton(
+                      labelText: "Login",
                       onPressed: () {
                         loginViewModel.hideKeyBoard(context);
                         loginViewModel.checkLogin();
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
+                      }),
+                  SpacerView(
+                    spaceSize: 20,
                   ),
                   loginViewModel.loadingView
                       ? SpinKitThreeBounce(
                           color: Colors.white,
                           size: 20,
                         )
-                      : SizedBox(
-                          height: 0,
+                      : SpacerView(
+                          spaceSize: 0,
                         ),
-                  SizedBox(
-                    height: 20,
+                  SpacerView(
+                    spaceSize: 20,
                   ),
                   Text('You do not have account?',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
                       )),
-                  SizedBox(
-                    height: 15,
+                  SpacerView(
+                    spaceSize: 15,
                   ),
-                  InkWell(
-                    onTap: () {
+                  ClickableText(
+                    label: "Register",
+                    textDecoration: TextDecoration.underline,
+                    onPressed: () {
                       loginViewModel.navigateToRegisterView();
                     },
-                    child: Text('Register',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 18,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  )
+                  ),
                 ],
               ),
             ),
