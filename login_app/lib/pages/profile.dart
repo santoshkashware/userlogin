@@ -2,40 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:login_app/utils/masked_text_controller.dart';
 import 'package:login_app/utils/validator.dart';
-import 'package:login_app/view%20models/register_view_model.dart';
+import 'package:login_app/view%20models/profile_view_model.dart';
 import 'package:login_app/widgets/clickable_text.dart';
 import 'package:login_app/widgets/cutom_buttom.dart';
 import 'package:login_app/widgets/spacer_view.dart';
 import 'package:login_app/widgets/textform.dart';
 import 'package:provider/provider.dart';
 
-class RegisterPage extends StatelessWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+class Profile extends StatelessWidget {
+  const Profile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final registerViewModel = Provider.of<RegisterViewModel>(context);
-    registerViewModel.initializeObject();
+    final profileViewModel = Provider.of<ProfileViewModel>(context);
+    profileViewModel.initializeObject();
+    return getContentView(profileViewModel, context);
+  }
+
+  getContentView(profileViewModel, context) {
     return Scaffold(
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.only(top: 60, left: 16, right: 16),
           child: SingleChildScrollView(
             child: Form(
-              key: registerViewModel.loginFormKey,
+              key: profileViewModel.loginFormKey,
               child: Column(
                 children: [
-                  Text(
-                    "User Register ",
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
-                  ),
-                  SpacerView(
-                    spaceSize: 20,
-                  ),
+                  SpacerView(spaceSize: 10),
                   InputFieldArea(
-                    controller: registerViewModel.fNameController!,
+                    controller: profileViewModel.fNameController!,
                     obscureText: false,
                     labelText: "First Name",
                     iconData: Icons.person,
@@ -45,7 +41,7 @@ class RegisterPage extends StatelessWidget {
                     spaceSize: 16,
                   ),
                   InputFieldArea(
-                      controller: registerViewModel.lNameController!,
+                      controller: profileViewModel.lNameController!,
                       obscureText: false,
                       labelText: "Last Name",
                       iconData: Icons.person,
@@ -54,7 +50,7 @@ class RegisterPage extends StatelessWidget {
                     spaceSize: 16,
                   ),
                   InputFieldArea(
-                      controller: registerViewModel.mobileController!,
+                      controller: profileViewModel.mobileController!,
                       obscureText: false,
                       labelText: "000 000 0000",
                       iconData: Icons.phone_android,
@@ -64,7 +60,7 @@ class RegisterPage extends StatelessWidget {
                     spaceSize: 16,
                   ),
                   InputFieldArea(
-                      controller: registerViewModel.dobController!,
+                      controller: profileViewModel.dobController!,
                       obscureText: false,
                       labelText: "dd-MM-yyyy",
                       iconData: Icons.cake,
@@ -74,7 +70,7 @@ class RegisterPage extends StatelessWidget {
                     spaceSize: 16,
                   ),
                   InputFieldArea(
-                      controller: registerViewModel.emailController!,
+                      controller: profileViewModel.emailController!,
                       obscureText: false,
                       labelText: "Email",
                       iconData: Icons.email,
@@ -83,7 +79,7 @@ class RegisterPage extends StatelessWidget {
                     spaceSize: 16,
                   ),
                   InputFieldArea(
-                      controller: registerViewModel.passwordController!,
+                      controller: profileViewModel.passwordController!,
                       obscureText: true,
                       labelText: "Password",
                       iconData: Icons.lock,
@@ -91,19 +87,19 @@ class RegisterPage extends StatelessWidget {
                   SpacerView(
                     spaceSize: 16,
                   ),
-                  getGenderView(registerViewModel),
+                  getGenderView(profileViewModel),
                   SpacerView(
                     spaceSize: 16,
                   ),
                   CustomButton(
-                      labelText: "Register",
+                      labelText: "Update Profile",
                       onPressed: () {
-                        registerViewModel.checkLogin();
+                        profileViewModel.checkLogin();
                       }),
                   SpacerView(
                     spaceSize: 16,
                   ),
-                  registerViewModel.loadingView
+                  profileViewModel.loadingView
                       ? SpinKitThreeBounce(
                           color: Colors.white,
                           size: 20,
@@ -114,23 +110,6 @@ class RegisterPage extends StatelessWidget {
                   SpacerView(
                     spaceSize: 20,
                   ),
-                  Text('You have account?',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 14,
-                      )),
-                  SpacerView(
-                    spaceSize: 20,
-                  ),
-                  ClickableText(
-                    label: "Login",
-                    textDecoration: TextDecoration.underline,
-                    onPressed: () {
-                      registerViewModel.hideKeyBoard(context);
-                      registerViewModel.navigateToLogin();
-                    },
-                  ),
-
                 ],
               ),
             ),

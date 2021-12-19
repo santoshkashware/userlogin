@@ -3,6 +3,13 @@ import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
 
 mixin ValidationMixin {
+  String? validateString(String value) {
+    if (value.isEmpty) {
+      return "Please input otp";
+    } else
+      return null;
+  }
+
   String? validateEmail(String value) {
     if (value.isEmpty) {
       return "Please enter email";
@@ -59,7 +66,9 @@ mixin ValidationMixin {
     else
       return null;
   }
+
   showErrorView({required String message}) {
     Get.snackbar("Error", "$message}");
   }
 }
+enum Gender { Male, Female, Other }

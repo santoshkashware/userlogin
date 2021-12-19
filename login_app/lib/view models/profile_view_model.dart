@@ -6,7 +6,7 @@ import 'package:login_app/routes/app_pages.dart';
 import 'package:login_app/services/firebaseauth.dart';
 import 'package:login_app/utils/validator.dart';
 
-class RegisterViewModel extends ChangeNotifier with ValidationMixin {
+class ProfileViewModel extends ChangeNotifier with ValidationMixin {
   TextEditingController? emailController,
       passwordController,
       fNameController,
@@ -17,7 +17,6 @@ class RegisterViewModel extends ChangeNotifier with ValidationMixin {
   final box = GetStorage();
   bool loadingView = false;
   final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
-  String genderValue = 'one';
   var defaultGender = Gender.Male;
 
   void initializeObject() {
@@ -30,7 +29,36 @@ class RegisterViewModel extends ChangeNotifier with ValidationMixin {
       mobileController = new TextEditingController();
     if (genderController == null)
       genderController = new TextEditingController();
-    if (dobController == null) dobController = new TextEditingController();
+    if (dobController == null) {
+      dobController = new TextEditingController();
+      updateUi();
+    }
+  }
+
+  updateUi() async {
+    notifyLoader(true);
+    String userEmail = box.read('email') ?? "";
+    await FirebaseData().handleUserData(userEmail).then((user) {
+      if (user.email != null) {
+        emailController!.text = user.email!;
+        passwordController!.text = user.password!;
+        fNameController!.text = user.fName!;
+        lNameController!.text = user.lName!;
+        dobController!.text = user.dob!;
+        mobileController!.text = user.mobile!;
+        defaultGender = user.gender == "Male"
+            ? Gender.Male
+            : user.gender == "Female"
+            ? Gender.Female
+            : Gender.Other;
+        notifyListeners();
+      } else {
+        print('data is null');
+      }
+    }).catchError((e) {
+      showErrorView(message: e);
+    });
+    notifyLoader(false);
   }
 
   checkLogin() async {
@@ -67,8 +95,8 @@ class RegisterViewModel extends ChangeNotifier with ValidationMixin {
             gender: defaultGender == Gender.Male
                 ? "Male"
                 : defaultGender == Gender.Male
-                    ? "Female"
-                    : "Other",
+                ? "Female"
+                : "Other",
             dob: dobController!.text,
             password: passwordController!.text);
         await FirebaseData()

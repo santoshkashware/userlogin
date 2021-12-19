@@ -10,21 +10,21 @@ class FirebaseData {
   Future<String> handleSignInEmail(
       String email, UserModelObject model) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("users");
-    DatabaseReference child = ref.child(email);
+    DatabaseReference child = ref.child(email.replaceAll(".", ","));
     await child.set(model.toJson());
     return "OK";
   }
 
   Future<bool> handleUpdate(String email, UserModelObject model) async {
     DatabaseReference ref =
-        FirebaseDatabase.instance.ref("users/${email}");
+        FirebaseDatabase.instance.ref("users/${email.replaceAll(".", ",")}");
     await ref.set(model.toJson());
     return true;
   }
 
   Future<UserModelObject> handleUserData(String email) async {
     UserModelObject dataModel = new UserModelObject();
-    DatabaseReference ref = FirebaseDatabase.instance.ref("users/${email}");
+    DatabaseReference ref = FirebaseDatabase.instance.ref("users/${email.replaceAll(".", ",")}");
     DatabaseEvent event = await ref.once();
     if (event.snapshot.value != null) {
       final jsonData = event.snapshot.value as Map<dynamic, dynamic>;

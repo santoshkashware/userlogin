@@ -54,6 +54,7 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin {
 
   navigateToHomeView() {
     box.write('home', true);
+    box.write('email', emailController!.text);
     Get.offAllNamed(Routes.HOME);
   }
 

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:login_app/pages/home_page.dart';
 import 'package:login_app/pages/login_page.dart';
+import 'package:login_app/pages/otpvalidation_page.dart';
 import 'package:login_app/pages/register_page.dart';
 import 'package:login_app/pages/splash_page.dart';
 
@@ -27,6 +28,10 @@ class AppPages {
     GetPage(
       name: _Paths.HOME,
       page: () => HomePage(),
+    ),
+    GetPage(
+      name: _Paths.OTP_VALIDATE,
+      page: () => OTPValidationPage(),
     ),
   ];
 }
