@@ -94,7 +94,7 @@ class Profile extends StatelessWidget {
                   CustomButton(
                       labelText: "Update Profile",
                       onPressed: () {
-                        profileViewModel.checkLogin();
+                        profileViewModel.checkUpdate();
                       }),
                   SpacerView(
                     spaceSize: 16,

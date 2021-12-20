@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:get/get_utils/src/get_utils/get_utils.dart';
 import 'package:intl/intl.dart';
@@ -5,7 +7,7 @@ import 'package:intl/intl.dart';
 mixin ValidationMixin {
   String? validateString(String value) {
     if (value.isEmpty) {
-      return "Please input otp";
+      return "Please input details";
     } else
       return null;
   }
@@ -70,5 +72,10 @@ mixin ValidationMixin {
   showErrorView({required String message}) {
     Get.snackbar("Error", "$message}");
   }
+   var chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+  Random _rnd = Random();
+
+  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+      length, (_) => chars.codeUnitAt(_rnd.nextInt(chars.length))));
 }
 enum Gender { Male, Female, Other }

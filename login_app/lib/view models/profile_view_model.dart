@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:login_app/models/usermodel_object.dart';
 import 'package:login_app/routes/app_pages.dart';
+import 'package:login_app/services/firebase_db.dart';
 import 'package:login_app/services/firebaseauth.dart';
 import 'package:login_app/utils/validator.dart';
 
@@ -31,27 +32,38 @@ class ProfileViewModel extends ChangeNotifier with ValidationMixin {
       genderController = new TextEditingController();
     if (dobController == null) {
       dobController = new TextEditingController();
-      updateUi();
+      Future.delayed(const Duration(milliseconds: 500), () {
+        updateUi();
+      });
+
     }
   }
 
   updateUi() async {
     notifyLoader(true);
     String userEmail = box.read('email') ?? "";
-    await FirebaseData().handleUserData(userEmail).then((user) {
-      if (user.email != null) {
-        emailController!.text = user.email!;
-        passwordController!.text = user.password!;
-        fNameController!.text = user.fName!;
-        lNameController!.text = user.lName!;
-        dobController!.text = user.dob!;
-        mobileController!.text = user.mobile!;
-        defaultGender = user.gender == "Male"
-            ? Gender.Male
-            : user.gender == "Female"
-            ? Gender.Female
-            : Gender.Other;
-        notifyListeners();
+    notifyLoader(true);
+    await FirebaseDB().handleLogin(userEmail).then((doc) {
+      if (doc != null) {
+        print('doc $doc');
+        UserModelObject user = UserModelObject.fromDocumnet(doc);
+
+        if (user.email != null) {
+          emailController!.text = user.email!;
+          passwordController!.text = user.password!;
+          fNameController!.text = user.fName!;
+          lNameController!.text = user.lName!;
+          dobController!.text = user.dob!;
+          mobileController!.text = user.mobile!;
+          defaultGender = user.gender == "Male"
+              ? Gender.Male
+              : user.gender == "Female"
+              ? Gender.Female
+              : Gender.Other;
+          notifyListeners();
+        } else {
+          print('data is null');
+        }
       } else {
         print('data is null');
       }
@@ -61,7 +73,7 @@ class ProfileViewModel extends ChangeNotifier with ValidationMixin {
     notifyLoader(false);
   }
 
-  checkLogin() async {
+  checkUpdate() async {
     final isValid = loginFormKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -99,12 +111,11 @@ class ProfileViewModel extends ChangeNotifier with ValidationMixin {
                 : "Other",
             dob: dobController!.text,
             password: passwordController!.text);
-        await FirebaseData()
-            .handleUpdate(emailController!.text, data)
+        await FirebaseDB()
+            .handleRegister(emailController!.text, data)
             .then((user) {
           if (user) {
-            // navigateToHomeView();
-            navigateToOtp();
+            Get.snackbar("Info", "Profile Updated Sucessfully");
           }
         }).catchError((e) {
           print('e.toString() ${e.toString()}');

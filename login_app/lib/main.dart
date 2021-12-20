@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_app/routes/app_pages.dart';
 import 'package:login_app/utils/them_data.dart';
+import 'package:login_app/view%20models/feed_view_model.dart';
 import 'package:login_app/view%20models/login_view_model.dart';
+import 'package:login_app/view%20models/product_view_model.dart';
 import 'package:login_app/view%20models/profile_view_model.dart';
 import 'package:login_app/view%20models/register_view_model.dart';
 import 'package:login_app/view%20models/validateotp_view_model.dart';
@@ -30,6 +32,12 @@ Future<void> main() async {
       ),
       ChangeNotifierProvider(
         create: (_) => ValidateOtpViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => FeedViewModel(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => ProductViewModel(),
       ),
     ],
     child: GetMaterialApp(

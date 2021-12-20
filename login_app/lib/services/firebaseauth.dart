@@ -7,6 +7,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:login_app/models/usermodel_object.dart';
 
 class FirebaseData {
+
   Future<String> handleSignInEmail(
       String email, UserModelObject model) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref("users");

@@ -8,6 +8,7 @@ abstract class Routes {
   static const REGISTER = _Paths.REGISTER;
   static const HOME = _Paths.HOME;
   static const OTP_VALIDATE = _Paths.OTP_VALIDATE;
+  static const ADD_PRODUCT = _Paths.ADD_PRODUCT;
 }
 
 abstract class _Paths {
@@ -16,4 +17,5 @@ abstract class _Paths {
   static const REGISTER = '/register';
   static const HOME = '/home';
   static const OTP_VALIDATE = '/otpvalidate';
+  static const ADD_PRODUCT = '/addproduct';
 }

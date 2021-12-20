@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class UserModelObject {
@@ -33,5 +34,13 @@ class UserModelObject {
     data['password'] = this.password;
     return data;
   }
-
+  UserModelObject.fromDocumnet(DocumentSnapshot json) {
+    fName = json['fName'];
+    lName = json['lName'];
+    mobile = json['mobile'];
+    email = json['email'];
+    gender = json['gender'];
+    dob = json['dob'];
+    password = json['password'];
+  }
 }

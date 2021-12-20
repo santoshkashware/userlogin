@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:login_app/models/usermodel_object.dart';
 import 'package:login_app/routes/app_pages.dart';
+import 'package:login_app/services/firebase_db.dart';
 import 'package:login_app/services/firebaseauth.dart';
 import 'package:login_app/utils/validator.dart';
 
@@ -33,7 +34,7 @@ class RegisterViewModel extends ChangeNotifier with ValidationMixin {
     if (dobController == null) dobController = new TextEditingController();
   }
 
-  checkLogin() async {
+  checkRegister() async {
     final isValid = loginFormKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -71,12 +72,11 @@ class RegisterViewModel extends ChangeNotifier with ValidationMixin {
                     : "Other",
             dob: dobController!.text,
             password: passwordController!.text);
-        await FirebaseData()
-            .handleUpdate(emailController!.text, data)
+        await FirebaseDB()
+            .handleRegister(emailController!.text, data)
             .then((user) {
           if (user) {
-            // navigateToHomeView();
-            navigateToOtp();
+             navigateToOtp();
           }
         }).catchError((e) {
           print('e.toString() ${e.toString()}');

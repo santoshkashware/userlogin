@@ -98,7 +98,7 @@ class RegisterPage extends StatelessWidget {
                   CustomButton(
                       labelText: "Register",
                       onPressed: () {
-                        registerViewModel.checkLogin();
+                        registerViewModel.checkRegister();
                       }),
                   SpacerView(
                     spaceSize: 16,

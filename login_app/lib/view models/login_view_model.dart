@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:login_app/models/usermodel_object.dart';
 import 'package:login_app/routes/app_pages.dart';
-import 'package:login_app/services/auth.dart';
-import 'package:login_app/services/firebaseauth.dart';
-import 'package:login_app/utils/validator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+ import 'package:login_app/services/firebase_db.dart';
+ import 'package:login_app/utils/validator.dart';
 
 class LoginViewModel extends ChangeNotifier with ValidationMixin {
   TextEditingController? emailController, passwordController;
@@ -27,8 +26,11 @@ class LoginViewModel extends ChangeNotifier with ValidationMixin {
       return;
     } else {
       notifyLoader(true);
-      await FirebaseData().handleUserData(emailController!.text).then((user) {
-        if (user.email != null) {
+      await FirebaseDB().handleLogin(emailController!.text).then((doc) {
+        if (doc != null) {
+          print('doc $doc');
+          UserModelObject user = UserModelObject.fromDocumnet(doc);
+
           if (emailController!.text == user.email &&
               passwordController!.text == user.password) {
             navigateToHomeView();
